@@ -3,8 +3,8 @@ import axios from "axios"
 import { createRemoteFileNode } from "gatsby-source-filesystem"
 import { CreateNodeArgs, SourceNodesArgs } from "gatsby"
 
-interface GramicOptions {
-  gramic_token: string
+interface PixamicOptions {
+  pixamic_token: string
   host?: string
   plugins: any[]
 }
@@ -23,24 +23,24 @@ export interface InstagramMediaResponse {
   data: InstagramMedia[]
 }
 
-const defaultHost = "https://alpha-api.gramic.io/me"
+const defaultHost = "https://alpha-api.pixamic.com/me"
 
 export const sourceNodes = async (
   { actions, createNodeId, reporter }: SourceNodesArgs,
-  pluginOptions: GramicOptions
+  pluginOptions: PixamicOptions
 ) => {
   const { createNode } = actions
 
-  reporter.info("Initializing Gramic API")
+  reporter.info("Initializing Pixamic API")
 
-  if (!pluginOptions.gramic_token) {
-    reporter.panic("gramic_token is missing in the plugin configuration")
+  if (!pluginOptions.pixamic_token) {
+    reporter.panic("pixamic_token is missing in the plugin configuration")
   }
 
-  const { gramic_token, host = defaultHost } = pluginOptions
+  const { pixamic_token, host = defaultHost } = pluginOptions
 
   const createImageNode = (image: InstagramMedia) => {
-    const nodeId = createNodeId(`gramic-instagram-${image.id}`)
+    const nodeId = createNodeId(`pixamic-instagram-${image.id}`)
     const nodeContent = JSON.stringify(image)
     const nodeContentDigest = crypto
       .createHash("md5")
@@ -57,23 +57,24 @@ export const sourceNodes = async (
       parent: null,
       children: [],
       internal: {
-        type: "GramicInstagramImage",
+        type: "PixamicInstagramImage",
         content: nodeContent,
         contentDigest: nodeContentDigest,
       },
     }
     createNode(nodeData)
   }
-  const timer = reporter.activityTimer(`Retrieving Instagram feed via Gramic`)
+  const timer = reporter.activityTimer(`Fetching Pixamic data`)
+  timer.start()
   return axios
     .get<InstagramMedia[]>(host, {
       headers: {
-        Authorization: `Bearer ${gramic_token}`,
+        Authorization: `Bearer ${pixamic_token}`,
       },
     })
     .then(({ data: media }) => {
       timer.end()
-      reporter.success(`retrieved ${media.length} images from Instagram`)
+      reporter.info(`Creating ${media.length} Pixamic Instagram nodes`)
       media.map(createImageNode)
     })
 }
@@ -88,7 +89,7 @@ export const onCreateNode = async ({
 }: CreateNodeArgs<InstagramMedia>) => {
   let fileNode
   const { createNode } = actions
-  if (node.internal.type === "GramicInstagramImage") {
+  if (node.internal.type === "PixamicInstagramImage") {
     try {
       fileNode = await createRemoteFileNode({
         url: node.media_url,
