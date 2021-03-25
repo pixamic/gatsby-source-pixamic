@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-pixamic",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Gatsby source plugin for the Pixamic API",
   "main": "./dist/index.js",
   "repository": "https://github.com/pixamic/gatsby-source-pixamic.git",

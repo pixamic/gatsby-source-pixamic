@@ -1,3 +1,5 @@
+### [0.2.1](https://github.com/pixamic/gatsby-source-pixamic/compare/0.2.0...0.2.1) (2021-03-25)
+
 ## 0.2.0 (2021-03-25)
 
 
