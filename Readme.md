@@ -2,7 +2,7 @@
 
 > 🚧 The Pixamic API is currently in closed alpha testing, and this Gatsby source plugin is a work in progress.
 
-Source plugin f pulls images from your social media account(s) into Gatsby via the [Pixamic](https://pixamic.com/) API.
+Source plugin for pulling images from your social media account(s) into Gatsby via the [Pixamic](https://pixamic.com/) API.
 
 This plugin also supports the new [Gatsby Image plugin](https://www.gatsbyjs.com/plugins/gatsby-plugin-image/).
 
