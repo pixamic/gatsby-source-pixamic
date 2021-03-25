@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Gatsby source plugin for the Pixamic API",
   "main": "./dist/index.js",
-  "repository": "https://github.com/pixamicio/gatsby-source-pixamic.git",
+  "repository": "https://github.com/pixamic/gatsby-source-pixamic.git",
   "author": "Nicholas Martin <nico@pixamic.com>",
   "license": "MIT",
   "private": false,
